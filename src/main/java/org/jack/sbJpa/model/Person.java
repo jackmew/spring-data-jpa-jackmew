@@ -5,11 +5,16 @@ package org.jack.sbJpa.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -35,17 +40,26 @@ public class Person {
     private String firstName;
  
     @Column(name = "last_name", nullable = false)
-    private String lastName;
+    private String lastName;@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "person_image",
+    joinColumns = {@JoinColumn(name= "person_id" , referencedColumnName = "id")},
+    inverseJoinColumns = {@JoinColumn(name = "image_id" , referencedColumnName = "id")})
+    private Image image;
      
     @Column(name = "modification_time", nullable = false)
     private Date modificationTime;
      
     @Version
     private long version = 0;
+    
+    
+    
  
 
 
-    /**
+
+
+	/**
 	 * @return the creationTime
 	 */
 	public Date getCreationTime() {
@@ -140,6 +154,22 @@ public class Person {
     public void setId(Long id) {
         this.id = id;
     }
+    
+
+    /**
+	 * @return the image
+	 */
+	public Image getImage() {
+		return image;
+	}
+
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(Image image) {
+		this.image = image;
+	}
     
     /**
      * for update person

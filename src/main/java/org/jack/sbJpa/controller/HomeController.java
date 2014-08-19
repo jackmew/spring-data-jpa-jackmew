@@ -21,10 +21,10 @@ public class HomeController {
 	@Autowired
     CustomerRepository cr ;
 	
-	@RequestMapping("/")
-	public String home() {
-		return "hello JPA";
-	}
+//	@RequestMapping("/")
+//	public String home() {
+//		return "hello";
+//	}
 	
 	@RequestMapping("/createCustomer")
 	public void createCustomer(){

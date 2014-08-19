@@ -1,0 +1,33 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		
+		 
+		 
+		 $('input[type=file]').change(function () {
+		     console.dir(this.files[0]);
+		     
+		     $('input[name="contentType"]').val(this.files[0].type);
+		})
+	});
+	
+	</script>
+</head>
+<body>
+	<form method="POST" enctype="multipart/form-data"
+		action="/person/personImage">
+		File to upload: <input type="file" name="file"/>
+		<br /> 
+		firstName: <input type="text" name="firstName"/>
+		<br /> <br />
+		lastName: <input type="text" name="lastName"/>
+		<br /> <br />
+		<input type="text" name="contentType"/>
+		<input type="submit" value="Upload"/> Press here to upload the file!
+	</form>
+	
+	<p id="showType"></p>
+</body>
+</html>

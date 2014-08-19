@@ -7,12 +7,17 @@ import java.util.Date;
 import java.util.List;
 
 import org.jack.sbJpa.exception.PersonNotFoundException;
+import org.jack.sbJpa.model.Image;
 import org.jack.sbJpa.model.Person;
+import org.jack.sbJpa.repository.ImageRepository;
 import org.jack.sbJpa.service.RepositoryPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author jackho
@@ -24,6 +29,7 @@ public class PersonController {
 	
 	@Autowired
 	RepositoryPersonService rps;
+	
 	
 	@RequestMapping("/")
 	public void createPerson() {
@@ -123,6 +129,48 @@ public class PersonController {
 		List<Person> persons = rps.findByCreationTimeBefore(new Date());
 		System.out.println("findByCreationTimeBefore");
 	}
+	
+	@RequestMapping(value="/personImage", method=RequestMethod.POST)
+    public @ResponseBody String handleFileUpload(@RequestParam("firstName") String firstName, 
+    		@RequestParam("lastName") String lastName, 
+    		@RequestParam("contentType") String contentType , 
+            @RequestParam("file") MultipartFile file){
+        if (!file.isEmpty()) {
+            try {
+//                byte[] bytes = file.getBytes();
+//                BufferedOutputStream stream = 
+//                        new BufferedOutputStream(new FileOutputStream(new File("src/main/img/"+ name + "-uploaded")));
+//                stream.write(bytes);
+//                stream.close();
+            	byte[] bytes = file.getBytes();
+            	String fileName = firstName+"-pic";
+            	
+            	Image image = new Image();
+            	image.setBytes(bytes);
+            	image.setContentType(contentType);
+            	image.setFileName(fileName);
+            	
+            	Person person = new Person();
+            	
+            	person.setCreationTime(new Date());
+            	person.setModificationTime(new Date());
+            	person.setFirstName(firstName);
+            	person.setLastName(lastName);
+            	person.setImage(image);
+            	
+            	rps.create(person);
+            	
+            	//ir.save(image);
+            	
+            	
+                return "You successfully save " + fileName + " into H2 !";
+            } catch (Exception e) {
+                return "You failed to save " + firstName + " => " + e.getMessage();
+            }
+        } else {
+            return "You failed to save " + firstName + " because the file was empty.";
+        }
+    }
 	
 	
 	/* @Query Annotation 
