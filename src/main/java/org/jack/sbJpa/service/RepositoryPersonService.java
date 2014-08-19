@@ -3,6 +3,7 @@
  */
 package org.jack.sbJpa.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.jack.sbJpa.exception.PersonNotFoundException;
@@ -79,6 +80,11 @@ public class RepositoryPersonService implements PersonService{
 	@Override
 	public List<Person> findByLastNameStartingWith(String lastName) {
 		return personRepository.findByLastNameStartingWith(lastName);
+	}
+
+	@Override
+	public List<Person> findByCreationTimeBefore(Date date) {
+		return personRepository.findByCreationTimeBefore(date);
 	}
 	
 	/* @Query Annotation 

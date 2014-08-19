@@ -3,6 +3,7 @@
  */
 package org.jack.sbJpa.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.jack.sbJpa.exception.PersonNotFoundException;
@@ -39,5 +40,9 @@ public interface PersonService {
     
 	public List<Person> findByFirstName(String firstName);
 	
+	
 	public List<Person> findByLastNameStartingWith(String lastName);
+	
+	
+	public List<Person> findByCreationTimeBefore(Date date);
 }

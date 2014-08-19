@@ -34,7 +34,35 @@ public class PersonController {
 		person.setModificationTime(new Date());
 		rps.create(person);
 		
-		System.out.println("create person");
+		Person person1 = new Person();
+		person1.setFirstName("Meow");
+		person1.setLastName("Mew");
+		person1.setCreationTime(new Date());
+		person1.setModificationTime(new Date());
+		rps.create(person1);
+		
+		Person person2 = new Person();
+		person2.setFirstName("c");
+		person2.setLastName("Chloe");
+		person2.setCreationTime(new Date());
+		person2.setModificationTime(new Date());
+		rps.create(person2);
+		
+		Person person3 = new Person();
+		person3.setFirstName("Ha");
+		person3.setLastName("Cartoon");
+		person3.setCreationTime(new Date());
+		person3.setModificationTime(new Date());
+		rps.create(person3);
+		
+		Person person4 = new Person();
+		person4.setFirstName("Nice");
+		person4.setLastName("Mac");
+		person4.setCreationTime(new Date());
+		person4.setModificationTime(new Date());
+		rps.create(person4);
+		
+		System.out.println("create persons");
 	}
 
 	@RequestMapping("/findAllPerson")
@@ -88,6 +116,12 @@ public class PersonController {
 		
 		List<Person> persons = rps.findByLastNameStartingWith(lastName);
 		System.out.println("find person findByLastnameLike ");
+	}
+	
+	@RequestMapping("/findByCreationTimeBefore")
+	public void findByCreationTimeBefore(){
+		List<Person> persons = rps.findByCreationTimeBefore(new Date());
+		System.out.println("findByCreationTimeBefore");
 	}
 	
 	
